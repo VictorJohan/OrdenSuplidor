@@ -6,4 +6,52 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Resources\agregar.png" />
+    <None Remove="Resources\delete.png" />
+    <None Remove="Resources\orden.png" />
+    <None Remove="Resources\remover.png" />
+    <None Remove="Resources\save.png" />
+    <None Remove="Resources\search.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityframeworkCore.SQLite" Version="3.1.5" />
+    <PackageReference Include="Microsoft.EntityframeworkCore.Tools" Version="3.1.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DAL\" />
+    <Folder Include="BLL\" />
+    <Folder Include="DATA\" />
+    <Folder Include="UI\Consultas\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\agregar.png" />
+    <Resource Include="Resources\delete.png" />
+    <Resource Include="Resources\orden.png" />
+    <Resource Include="Resources\remover.png" />
+    <Resource Include="Resources\save.png" />
+    <Resource Include="Resources\search.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>
