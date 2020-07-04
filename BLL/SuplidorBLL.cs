@@ -87,5 +87,27 @@ namespace OrdenSuplidor.BLL
 
             return ok;
         }
+
+        public static Suplidores Buscar(int id)
+        {
+            Contexto contexto = new Contexto();
+            Suplidores suplidor;
+
+            try
+            {
+                suplidor = contexto.Suplidores.Find(id);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                contexto.Dispose();
+            }
+
+            return suplidor;
+        }
     }
 }

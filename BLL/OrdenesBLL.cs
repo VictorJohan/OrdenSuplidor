@@ -10,8 +10,6 @@ namespace OrdenSuplidor.BLL
 {
     public class OrdenesBLL
     {
-
-
         public static bool Guardar(Ordenes orden)
         {
             if (!Existe(orden.OrdenId)) 
@@ -78,6 +76,52 @@ namespace OrdenSuplidor.BLL
                     contexto.Entry(anterior).State = EntityState.Added;
                 }
                 contexto.Entry(orden).State = EntityState.Modified;
+                ok = contexto.SaveChanges() > 0;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                contexto.Dispose();
+            }
+
+            return ok;
+        }
+
+        public static Ordenes Buscar(int id)
+        {
+            Contexto contexto = new Contexto();
+            Ordenes orden;
+
+            try
+            {
+                orden = contexto.Ordenes.Include(o => o.OrdenesDetalles).Where(p => p.OrdenId == id).SingleOrDefault();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                contexto.Dispose();
+            }
+
+            return orden;
+        }
+
+        public static bool Eliminar(int id)
+        {
+            Contexto contexto = new Contexto();
+            bool ok = false;
+
+            try
+            {
+                var orden = contexto.Ordenes.Find(id);
+                contexto.Entry(orden).State = EntityState.Deleted;
                 ok = contexto.SaveChanges() > 0;
             }
             catch (Exception)
