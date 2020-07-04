@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using OrdenSuplidor.DAL;
 using OrdenSuplidor.Entidades;
 using System;
@@ -8,16 +9,15 @@ using System.Text;
 
 namespace OrdenSuplidor.BLL
 {
-    public class OrdenesBLL
+    public class SuplidorBLL
     {
 
-
-        public static bool Guardar(Ordenes orden)
+        public static bool Guardar(Suplidores suplidor)
         {
-            if (!Existe(orden.OrdenId)) 
-                return Insertar(orden);
+            if (!Existe(suplidor.SuplidorId))
+                return Insertar(suplidor);
             else
-                return Modificar(orden);
+                return Modificar(suplidor);
         }
 
         public static bool Existe(int id)
@@ -26,8 +26,8 @@ namespace OrdenSuplidor.BLL
             bool ok = false;
 
             try
-            {
-               ok = contexto.Ordenes.Any(o => o.OrdenId == id);
+            { 
+                ok = contexto.Suplidores.Any(s => s.SuplidorId == id);
             }
             catch (Exception)
             {
@@ -42,14 +42,14 @@ namespace OrdenSuplidor.BLL
             return ok;
         }
 
-        private static bool Insertar(Ordenes orden)
+        private static bool Modificar(Suplidores suplidor)
         {
             Contexto contexto = new Contexto();
             bool ok = false;
 
             try
             {
-                contexto.Ordenes.Add(orden);
+                contexto.Entry(suplidor).State = EntityState.Modified;
                 ok = contexto.SaveChanges() > 0;
             }
             catch (Exception)
@@ -65,19 +65,14 @@ namespace OrdenSuplidor.BLL
             return ok;
         }
 
-        public static bool Modificar(Ordenes orden)
+        private static bool Insertar(Suplidores suplidor)
         {
             Contexto contexto = new Contexto();
             bool ok = false;
 
             try
             {
-                contexto.Database.ExecuteSqlRaw($"Delete FROM OrdenesDetalle Where OrdenId={orden.OrdenId}");
-                foreach (var anterior in orden.OrdenesDetalles)
-                {
-                    contexto.Entry(anterior).State = EntityState.Added;
-                }
-                contexto.Entry(orden).State = EntityState.Modified;
+                contexto.Suplidores.Add(suplidor);
                 ok = contexto.SaveChanges() > 0;
             }
             catch (Exception)
@@ -92,6 +87,5 @@ namespace OrdenSuplidor.BLL
 
             return ok;
         }
-
     }
 }
