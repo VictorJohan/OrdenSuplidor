@@ -10,6 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="OrdenSuplidorTest\**" />
+    <EmbeddedResource Remove="OrdenSuplidorTest\**" />
+    <None Remove="OrdenSuplidorTest\**" />
+    <Page Remove="OrdenSuplidorTest\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Resources\agregar.png" />
     <None Remove="Resources\delete.png" />
     <None Remove="Resources\orden.png" />
