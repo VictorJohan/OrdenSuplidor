@@ -12,7 +12,7 @@ namespace OrdenSuplidor.BLL
     {
         public static bool Guardar(Productos producto)
         {
-            if (!Existe(producto.ProductosId))
+            if (!Existe(producto.ProductoId))
                 return Insertar(producto);
             else
                 return Modificar(producto);
@@ -25,7 +25,7 @@ namespace OrdenSuplidor.BLL
 
             try
             {
-                ok = contexto.Productos.Any(s => s.ProductosId == id);
+                ok = contexto.Productos.Any(s => s.ProductoId == id);
             }
             catch (Exception)
             {
@@ -106,6 +106,30 @@ namespace OrdenSuplidor.BLL
             }
 
             return producto;
+        }
+
+        public static bool Eliminar(int id)
+        {
+            Contexto contexto = new Contexto();
+            bool ok = false;
+
+            try
+            {
+                var producto = contexto.Productos.Find(id);
+                contexto.Productos.Remove(producto);
+                ok = contexto.SaveChanges() > 0;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                contexto.SaveChanges();
+            }
+
+            return ok;
         }
     }
 }

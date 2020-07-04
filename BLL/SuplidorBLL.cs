@@ -109,5 +109,29 @@ namespace OrdenSuplidor.BLL
 
             return suplidor;
         }
+
+        public static bool Eliminar(int id)
+        {
+            Contexto contexto = new Contexto();
+            bool ok = false;
+
+            try
+            {
+                var orden = contexto.Suplidores.Find(id);
+                contexto.Suplidores.Remove(orden);
+                ok = contexto.SaveChanges() > 0;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                contexto.SaveChanges();
+            }
+
+            return ok;
+        }
     }
 }

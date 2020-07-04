@@ -5,8 +5,108 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OrdenSuplidor.UI.Registros"
         mc:Ignorable="d"
-        Title="rOrdenes" Height="450" Width="800">
+        Title="Ordenes" Height="564" Width="423" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
     <Grid>
-        
+        <StackPanel Orientation="Vertical" Margin="10,10,10,10">
+            <Label Content="OrdenId" FontSize="11"/>
+
+            <!--OrdenIdTextBox y BuscarButton-->
+            <StackPanel Orientation="Horizontal">
+                <!--TextBox-->
+                <TextBox Name="OrdenIdTextBox" Width="303" Height="20" Margin="5,0" Text="{Binding OrdenId}"/>
+
+                <!--Button-->
+                <Button Name="BucarButton" Width="60" Height="20" Margin="5,0" Click="BucarButton_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Resources/search.png" />
+                        <Label Content="Buscar" Margin="4,0" Padding="-1"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+
+            <Label Content="Fecha" FontSize="11"/>
+            <DatePicker Name="FechaDatePicker" Width="373" Height="20" SelectedDate="{Binding Fecha}" Margin="5,0" Padding="-1" HorizontalAlignment="Left"/>
+
+            <Label Content="SuplidorId" FontSize="11"/>
+            <TextBox Name="SuplidorIdTextBox" Width="373" Height="20" Margin="5,0" Text="{Binding SuplidorId}" HorizontalAlignment="Left"/>
+
+            <Label Content="Monto" FontSize="11"/>
+            <TextBox Name="MontoTextBox" Width="373" Height="20" Margin="5,0" Text="{Binding Monto}" HorizontalAlignment="Left"/>
+
+            <GroupBox Header="Orden Detalle" Width="373" BorderBrush="#FF414649" HorizontalAlignment="Left" Margin="5,0">
+
+                <StackPanel Orientation="Vertical">
+                    
+                    <Label Content="Id" FontSize="11"/>
+                    <TextBox Name="IdTextBox" Width="350" Height="20"  HorizontalAlignment="Left"/>
+
+                    <Label Content="OrdenId" FontSize="11"/>
+                    <TextBox Name="OrdenIdDetalleTextBox" Width="350" Height="20"  HorizontalAlignment="Left"/>
+
+                    <Label Content="Cantidad" FontSize="11"/>
+                    <TextBox Name="CantidadTextBox" Width="350" Height="20"  HorizontalAlignment="Left"/>
+
+                    <Label Content="Costo" FontSize="11"/>
+                    <!--CostoTextBox, AgregarButton y RemoverButton-->
+                    <StackPanel Orientation="Horizontal">
+                        <!--CostoTextBox-->
+                        <TextBox Name="CostoTextBox" Width="191" Height="20"  HorizontalAlignment="Left"/>
+
+                        <!--AgregarButto-->
+                        <Button Name="AgregarButton" Width="69" Height="20" Margin="8,0,5,0" Click="AgregarButton_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="/Resources/agregar.png" />
+                                <Label Content="Agregar" Margin="4,0" Padding="-1"/>
+                            </StackPanel>
+                        </Button>
+
+                        <!--RemoverButton-->
+                        <Button Name="RemoverButton" Width="72" Height="20" Margin="5,0" Click="RemoverButton_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="/Resources/remover.png" />
+                                <Label Content="Remover" Margin="4,0" Padding="-1"/>
+                            </StackPanel>
+                        </Button>
+
+                    </StackPanel>
+
+                    <DataGrid x:Name="DetalleDataGrid" Height="80" HorizontalAlignment="Left" AlternatingRowBackground="#FFBAE3FF" AutoGenerateColumns="False" ItemsSource="{Binding OrdenesDetalles}" Margin="0,5,0,0" Width="350">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+                            <DataGridTextColumn Header="Cantidad" Binding="{Binding Cantidad}"/>
+                            <DataGridTextColumn Header="Costo" Binding="{Binding Costo}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                </StackPanel>
+
+            </GroupBox>
+
+            <!--Barra de botones-->
+            <StackPanel Orientation="Horizontal" Width="210" Margin="0,11,0,0">
+                <Button Name="NuevoButton" Width="60" Height="20" Click="NuevoButton_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Resources/orden.png" />
+                        <Label Content="Nuevo" Padding="-1" Margin="4,0"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Name="GuardarButton" Width="67" Height="20" Margin="5,0,0,0" Click="GuardarButton_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Resources/save.png" />
+                        <Label Content="Guardar" Padding="-1" Margin="4,0"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Name="EliminarButton" Width="67" Height="20" Margin="5,0,0,0" Click="EliminarButton_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Resources/delete.png" />
+                        <Label Content="Eliminar" Padding="-1" Margin="4,0"/>
+                    </StackPanel>
+                </Button>
+
+            </StackPanel>
+
+        </StackPanel>
     </Grid>
 </Window>

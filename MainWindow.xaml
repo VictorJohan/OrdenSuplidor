@@ -5,8 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OrdenSuplidor"
         mc:Ignorable="d"
-        Title="Registro Orden" Height="450" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
+        Title="Menu" Height="450" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
     <Grid>
-
+        <Menu>
+            <MenuItem Header="Registros">
+                <MenuItem Header="Ordenes" Click="MenuItem_Click"/>
+            </MenuItem>
+        </Menu>
     </Grid>
 </Window>

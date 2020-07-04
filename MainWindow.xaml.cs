@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OrdenSuplidor.UI.Registros;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,12 @@ namespace OrdenSuplidor
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            rOrdenes rOrdenes = new rOrdenes();
+            rOrdenes.Show();
         }
     }
 }

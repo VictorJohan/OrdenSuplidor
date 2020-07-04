@@ -60,7 +60,7 @@ namespace OrdenSuplidor.Migrations
 
             modelBuilder.Entity("OrdenSuplidor.Entidades.Productos", b =>
                 {
-                    b.Property<int>("ProductosId")
+                    b.Property<int>("ProductoId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -73,9 +73,60 @@ namespace OrdenSuplidor.Migrations
                     b.Property<int>("Inventario")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("ProductosId");
+                    b.HasKey("ProductoId");
 
                     b.ToTable("Productos");
+
+                    b.HasData(
+                        new
+                        {
+                            ProductoId = 1,
+                            Costo = 1500.5,
+                            Descripcion = "Es un producto 1",
+                            Inventario = 10
+                        },
+                        new
+                        {
+                            ProductoId = 2,
+                            Costo = 5000.0,
+                            Descripcion = "Es un producto 2",
+                            Inventario = 10
+                        },
+                        new
+                        {
+                            ProductoId = 3,
+                            Costo = 3000.0,
+                            Descripcion = "Es un producto 3",
+                            Inventario = 10
+                        },
+                        new
+                        {
+                            ProductoId = 4,
+                            Costo = 120.0,
+                            Descripcion = "Es un producto 4",
+                            Inventario = 10
+                        },
+                        new
+                        {
+                            ProductoId = 5,
+                            Costo = 4560.0,
+                            Descripcion = "Es un producto 5",
+                            Inventario = 10
+                        },
+                        new
+                        {
+                            ProductoId = 6,
+                            Costo = 2000.0,
+                            Descripcion = "Es un producto 6",
+                            Inventario = 10
+                        },
+                        new
+                        {
+                            ProductoId = 7,
+                            Costo = 1000.0,
+                            Descripcion = "Es un producto 7",
+                            Inventario = 10
+                        });
                 });
 
             modelBuilder.Entity("OrdenSuplidor.Entidades.Suplidores", b =>
@@ -90,6 +141,28 @@ namespace OrdenSuplidor.Migrations
                     b.HasKey("SuplidorId");
 
                     b.ToTable("Suplidores");
+
+                    b.HasData(
+                        new
+                        {
+                            SuplidorId = 1,
+                            Nombres = "Victor"
+                        },
+                        new
+                        {
+                            SuplidorId = 2,
+                            Nombres = "Johan"
+                        },
+                        new
+                        {
+                            SuplidorId = 3,
+                            Nombres = "Palma"
+                        },
+                        new
+                        {
+                            SuplidorId = 4,
+                            Nombres = "Rodríguez"
+                        });
                 });
 
             modelBuilder.Entity("OrdenSuplidor.Entidades.OrdenesDetalle", b =>
