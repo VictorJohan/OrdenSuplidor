@@ -133,5 +133,27 @@ namespace OrdenSuplidor.BLL
 
             return ok;
         }
+
+        public static List<Suplidores> GetSuplidores()
+        {
+            Contexto contexto = new Contexto();
+            List<Suplidores> suplidores = new List<Suplidores>();
+
+            try
+            {
+                suplidores = contexto.Suplidores.ToList();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                contexto.Dispose();
+            }
+
+            return suplidores;
+        }
     }
 }

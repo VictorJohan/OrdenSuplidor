@@ -26,6 +26,17 @@ namespace OrdenSuplidor.UI.Registros
         {
             InitializeComponent();
             this.DataContext = Orden;
+
+            //Llenamos el SuplidorComboBox
+            SuplidorIdComboBox.ItemsSource = SuplidorBLL.GetSuplidores();
+            SuplidorIdComboBox.SelectedValuePath = "Suplidores";
+            SuplidorIdComboBox.DisplayMemberPath = "SuplidorId";
+
+            //Llenamos el ProductosComboBox
+            ProductosComboBox.ItemsSource = ProductosBLL.GetProductos();
+            ProductosComboBox.SelectedValuePath = "Productos";
+            ProductosComboBox.DisplayMemberPath = "ProductoId";
+
         }
 
         private void BucarButton_Click(object sender, RoutedEventArgs e)
@@ -44,18 +55,11 @@ namespace OrdenSuplidor.UI.Registros
             if (!ValidarAgregar())
                 return;
 
-            var detalle = new OrdenesDetalle(int.Parse(IdTextBox.Text), int.Parse(OrdenIdDetalleTextBox.Text), 
-                int.Parse(CantidadTextBox.Text) ,double.Parse(CostoTextBox.Text));
-
-            Orden.OrdenesDetalles.Add(detalle);
+            
 
             Cargar();
 
-            IdTextBox.Clear();
-            OrdenIdDetalleTextBox.Clear();
-            CantidadTextBox.Clear();
-            CostoTextBox.Clear();
-            IdTextBox.Focus();
+            
         }
 
         private void RemoverButton_Click(object sender, RoutedEventArgs e)
@@ -136,23 +140,9 @@ namespace OrdenSuplidor.UI.Registros
 
         public bool ValidarAgregar()
         {
-            if (IdTextBox.Text.Length == 0 || OrdenIdDetalleTextBox.Text.Length == 0 ||
-                CantidadTextBox.Text.Length == 0 || CostoTextBox.Text.Length == 0)
+            if (CantidadTextBox.Text.Length == 0 || CostoTextBox.Text.Length == 0)
             {
                 MessageBox.Show("No pueden haber campos vacios.", "Campo vacio.", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return false;
-            }
-
-
-            if (!Regex.IsMatch(IdTextBox.Text, "^[0-9]+$"))
-            {
-                MessageBox.Show("Solo se permiten caracteres numericos.", "Campo Id.", MessageBoxButton.OK, MessageBoxImage.Error);
-                return false;
-            }
-
-            if (!Regex.IsMatch(OrdenIdDetalleTextBox.Text, "^[0-9]+$"))
-            {
-                MessageBox.Show("Solo se permiten caracteres numericos.", "Campo Detalle||OrdenId.", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
 
@@ -174,11 +164,6 @@ namespace OrdenSuplidor.UI.Registros
                 return false;
             }
 
-            if (!Regex.IsMatch(SuplidorIdTextBox.Text, "^[0-9]+$"))
-            {
-                MessageBox.Show("Solo se permiten caracteres numericos.", "Campo Suplidor.", MessageBoxButton.OK, MessageBoxImage.Error);
-                return false;
-            }
 
             if (!Regex.IsMatch(MontoTextBox.Text, "^[0-9]+$"))
             {
@@ -197,12 +182,6 @@ namespace OrdenSuplidor.UI.Registros
                 return false;
             }
 
-            if (!Regex.IsMatch(SuplidorIdTextBox.Text, "^[1-9]+$"))
-            {
-                MessageBox.Show("Solo se permiten caracteres numericos.", "Campo Suplidor.", MessageBoxButton.OK, MessageBoxImage.Error);
-                return false;
-            }
-
             if (!Regex.IsMatch(MontoTextBox.Text, "^[1-9]+$"))
             {
                 MessageBox.Show("Solo se permiten caracteres numericos.", "Campo Monto.", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -212,5 +191,20 @@ namespace OrdenSuplidor.UI.Registros
             return true;
         }
 
+        private void SuplidorIdComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var suplidor = ((Suplidores)SuplidorIdComboBox.SelectedItem);
+ 
+            NombresSuplidorTextBox.Text = suplidor.Nombres;
+        }
+
+        private void ProductosComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var producto = ((Productos)ProductosComboBox.SelectedItem);
+
+            CostoTextBox.Text = producto.Costo.ToString();
+            DescripcionTextBox.Text = producto.Descripcion;
+            InventarioTextBox.Text = producto.Inventario.ToString();
+        }
     }
 }
