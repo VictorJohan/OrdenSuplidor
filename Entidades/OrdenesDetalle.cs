@@ -12,13 +12,18 @@ namespace OrdenSuplidor.Entidades
         public int OrdenId { get; set; }
         public int Cantidad { get; set; }
         public double Costo { get; set; }
-
-        public OrdenesDetalle(int id, int ordenId, int cantidad, double costo)
+        public int IdProducto { get; set; }
+        public double Total { get; set; }
+        public string Descripcion { get; set; }
+        public OrdenesDetalle(int ordenId, int idProducto, int cantidad, double costo, double total, string descripcion)
         {
-            Id = id;
+            Id = 0;
             OrdenId = ordenId;
+            IdProducto = idProducto;
             Cantidad = cantidad;
             Costo = costo;
+            Total = total;
+            Descripcion = descripcion;
         }
 
     }

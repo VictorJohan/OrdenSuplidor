@@ -9,7 +9,7 @@ using OrdenSuplidor.DAL;
 namespace OrdenSuplidor.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20200704050941_Migracion_Inicial")]
+    [Migration("20200705041821_Migracion_Inicial")]
     partial class Migracion_Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,8 +50,17 @@ namespace OrdenSuplidor.Migrations
                     b.Property<double>("Costo")
                         .HasColumnType("REAL");
 
+                    b.Property<string>("Descripcion")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("IdProducto")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("OrdenId")
                         .HasColumnType("INTEGER");
+
+                    b.Property<double>("Total")
+                        .HasColumnType("REAL");
 
                     b.HasKey("Id");
 

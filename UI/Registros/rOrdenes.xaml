@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OrdenSuplidor.UI.Registros"
         mc:Ignorable="d"
-        Title="Ordenes" Height="454" Width="658" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
+        Title="Ordenes" Height="454" Width="743" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
     <Grid>
         <StackPanel Orientation="Vertical" Margin="10,10,10,10">
             <Label Content="OrdenId" FontSize="11"/>
@@ -13,7 +13,7 @@
             <!--OrdenIdTextBox y BuscarButton-->
             <StackPanel Orientation="Horizontal">
                 <!--TextBox-->
-                <TextBox Name="OrdenIdTextBox" Width="535" Height="20" Margin="5,0" Text="{Binding OrdenId}"/>
+                <TextBox Name="OrdenIdTextBox" Width="625" Height="20" Margin="5,0" Text="{Binding OrdenId}"/>
 
                 <!--Button-->
                 <Button Name="BucarButton" Width="60" Height="20" Margin="5,0" Click="BucarButton_Click">
@@ -25,22 +25,22 @@
             </StackPanel>
 
             <Label Content="Fecha" FontSize="11"/>
-            <DatePicker Name="FechaDatePicker" Width="604" Height="20" SelectedDate="{Binding Fecha}" Margin="5,0" Padding="-1" HorizontalAlignment="Left"/>
+            <DatePicker Name="FechaDatePicker" Width="695" Height="20" SelectedDate="{Binding Fecha}" Margin="5,0" Padding="-1" HorizontalAlignment="Left"/>
 
             <StackPanel Orientation="Horizontal">
-                <Label Content="SuplidorId" FontSize="11"/>
-                <Label Content="Nombres " FontSize="11"/>
+                
+                <Label Content="Suplidor" FontSize="11"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal">
-                <ComboBox Name="SuplidorIdComboBox" Width="50" Height="20" Margin="5,0" HorizontalAlignment="Left" SelectionChanged="SuplidorIdComboBox_SelectionChanged"/>
-                <TextBox Name="NombresSuplidorTextBox" Width="544" Height="20" IsReadOnly="True" Margin="5,0"/>
+                <ComboBox Name="SuplidorIdComboBox" Width="264" Height="20" Margin="5,0" HorizontalAlignment="Left"/>
+                
             </StackPanel>
 
             <Label Content="Monto" FontSize="11"/>
-            <TextBox Name="MontoTextBox" Width="604" Height="20" IsReadOnly="True" Margin="5,0" Text="{Binding Monto}" HorizontalAlignment="Left"/>
+            <TextBox Name="MontoTextBox" Width="695" Height="20" IsReadOnly="True" Margin="5,0" Text="{Binding Monto}" HorizontalAlignment="Left"/>
 
-            <GroupBox Header="Orden Detalle" Width="605" BorderBrush="#FF414649" HorizontalAlignment="Left" Margin="5,10,5,0">
+            <GroupBox Header="Orden Detalle" Width="697" BorderBrush="#FF414649" HorizontalAlignment="Left" Margin="5,10,5,0">
 
                 <StackPanel Orientation="Vertical">
 
@@ -49,14 +49,16 @@
                         <Label Content="Cantidad" FontSize="11" Margin="11,0,0,0"/>
                         <Label Content="Costo" FontSize="11" Margin="19,0,0,0"/>
                         <Label Content="Descripción" FontSize="11" Margin="35,0,0,0" Width="67"/>
-                        <Label Content="Inventario" FontSize="11" Margin="73,0,0,0"/>
+                        <Label Content="Total" FontSize="11" Margin="73,0,0,0" Width="67"/>
+                        <Label Content="Inventario" FontSize="11" Margin="35,0,0,0"/>
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal">
                         <ComboBox Name="ProductosComboBox" Width="43" Height="20" SelectionChanged="ProductosComboBox_SelectionChanged"/>
-                        <TextBox Name="CantidadTextBox" Width="50" Height="20" HorizontalAlignment="Left" Margin="23,0,0,0"/>
+                        <TextBox Name="CantidadTextBox" Width="50" Height="20" HorizontalAlignment="Left" Margin="23,0,0,0" TextChanged="CantidadTextBox_TextChanged"/>
                         <TextBox Name="CostoTextBox" Width="50" Height="20" IsReadOnly="True" HorizontalAlignment="Left" Margin="23,0,0,0"/>
                         <TextBox Name="DescripcionTextBox" Width="117" Height="20" IsReadOnly="True" HorizontalAlignment="Left" Margin="23,0,0,0"/>
+                        <TextBox Name="TotalTexbox" Width="79" Height="20" IsReadOnly="True" HorizontalAlignment="Left" Margin="23,0,0,0"/>
                         <TextBox Name="InventarioTextBox" Width="50" Height="20" IsReadOnly="True" HorizontalAlignment="Left" Margin="23,0,0,0"/>
 
                         <Button Name="AgregarButton" Width="69" Height="20" Margin="22,0,5,0" Click="AgregarButton_Click">
@@ -82,11 +84,13 @@
 
                     </StackPanel>
 
-                    <DataGrid x:Name="DetalleDataGrid" Height="80" HorizontalAlignment="Left" AlternatingRowBackground="#FFBAE3FF" AutoGenerateColumns="False" ItemsSource="{Binding OrdenesDetalles}" Margin="0,5,0,0" Width="575">
+                    <DataGrid x:Name="DetalleDataGrid" Height="80" HorizontalAlignment="Left" AlternatingRowBackground="#FFBAE3FF" AutoGenerateColumns="False" ItemsSource="{Binding OrdenesDetalles}" Margin="0,5,0,0" Width="677">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Producto" Binding="{Binding Id}"/>
-                            <DataGridTextColumn Header="Cantidad" Binding="{Binding Cantidad}"/>
-                            <DataGridTextColumn Header="Costo" Binding="{Binding Costo}"/>
+                            <DataGridTextColumn Header="Producto" IsReadOnly="True" Binding="{Binding IdProducto}"/>
+                            <DataGridTextColumn Header="Cantidad" IsReadOnly="True" Binding="{Binding Cantidad}"/>
+                            <DataGridTextColumn Header="Descripción" IsReadOnly="True" Binding="{Binding Descripcion}"/>
+                            <DataGridTextColumn Header="Costo" IsReadOnly="True" Binding="{Binding Costo}"/>
+                            <DataGridTextColumn Header="Total" IsReadOnly="True" Binding="{Binding Total}"/>
                         </DataGrid.Columns>
                     </DataGrid>
 

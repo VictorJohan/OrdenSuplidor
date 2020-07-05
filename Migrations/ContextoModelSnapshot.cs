@@ -48,8 +48,17 @@ namespace OrdenSuplidor.Migrations
                     b.Property<double>("Costo")
                         .HasColumnType("REAL");
 
+                    b.Property<string>("Descripcion")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("IdProducto")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("OrdenId")
                         .HasColumnType("INTEGER");
+
+                    b.Property<double>("Total")
+                        .HasColumnType("REAL");
 
                     b.HasKey("Id");
 

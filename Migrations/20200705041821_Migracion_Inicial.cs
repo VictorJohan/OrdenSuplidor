@@ -58,7 +58,10 @@ namespace OrdenSuplidor.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     OrdenId = table.Column<int>(nullable: false),
                     Cantidad = table.Column<int>(nullable: false),
-                    Costo = table.Column<double>(nullable: false)
+                    Costo = table.Column<double>(nullable: false),
+                    IdProducto = table.Column<int>(nullable: false),
+                    Total = table.Column<double>(nullable: false),
+                    Descripcion = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

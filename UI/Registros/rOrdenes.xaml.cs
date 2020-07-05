@@ -21,7 +21,7 @@ namespace OrdenSuplidor.UI.Registros
     public partial class rOrdenes : Window
     {
         private Ordenes Orden = new Ordenes();
-
+        Productos producto;
         public rOrdenes()
         {
             InitializeComponent();
@@ -30,7 +30,7 @@ namespace OrdenSuplidor.UI.Registros
             //Llenamos el SuplidorComboBox
             SuplidorIdComboBox.ItemsSource = SuplidorBLL.GetSuplidores();
             SuplidorIdComboBox.SelectedValuePath = "Suplidores";
-            SuplidorIdComboBox.DisplayMemberPath = "SuplidorId";
+            SuplidorIdComboBox.DisplayMemberPath = "Nombres";
 
             //Llenamos el ProductosComboBox
             ProductosComboBox.ItemsSource = ProductosBLL.GetProductos();
@@ -55,11 +55,18 @@ namespace OrdenSuplidor.UI.Registros
             if (!ValidarAgregar())
                 return;
 
-            
+            var detalle = new OrdenesDetalle(int.Parse(OrdenIdTextBox.Text), producto.ProductoId,
+                  int.Parse(CantidadTextBox.Text), double.Parse(CostoTextBox.Text), double.Parse(TotalTexbox.Text), producto.Descripcion);
+
+            Orden.OrdenesDetalles.Add(detalle);
+            Orden.Monto += double.Parse(TotalTexbox.Text);
+            producto.Inventario -= int.Parse(CantidadTextBox.Text);
+
+            //ModificarProducto(); Descomente para guardar los cambios de la propiedad Inventario
 
             Cargar();
 
-            
+            LimpiarDetalle();
         }
 
         private void RemoverButton_Click(object sender, RoutedEventArgs e)
@@ -68,8 +75,10 @@ namespace OrdenSuplidor.UI.Registros
                 return;
 
             Orden.OrdenesDetalles.RemoveAt(DetalleDataGrid.SelectedIndex);
-            
+
             Cargar();
+
+            CantidadTextBox.Clear();
 
         }
 
@@ -136,6 +145,7 @@ namespace OrdenSuplidor.UI.Registros
         {
             this.Orden = new Ordenes();
             this.DataContext = Orden;
+            SuplidorIdComboBox.SelectedItem = null;
         }
 
         public bool ValidarAgregar()
@@ -152,22 +162,9 @@ namespace OrdenSuplidor.UI.Registros
                 return false;
             }
 
-            if (!Regex.IsMatch(CostoTextBox.Text, "^[0-9]+$"))
-            {
-                MessageBox.Show("Solo se permiten caracteres numericos.", "Campo Costo.", MessageBoxButton.OK, MessageBoxImage.Error);
-                return false;
-            }
-
             if (!Regex.IsMatch(OrdenIdTextBox.Text, "^[0-9]+$"))
             {
                 MessageBox.Show("Solo se permiten caracteres numericos.", "Campo OrdenId.", MessageBoxButton.OK, MessageBoxImage.Error);
-                return false;
-            }
-
-
-            if (!Regex.IsMatch(MontoTextBox.Text, "^[0-9]+$"))
-            {
-                MessageBox.Show("Solo se permiten caracteres numericos.", "Campo Monto.", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
 
@@ -182,29 +179,57 @@ namespace OrdenSuplidor.UI.Registros
                 return false;
             }
 
-            if (!Regex.IsMatch(MontoTextBox.Text, "^[1-9]+$"))
-            {
-                MessageBox.Show("Solo se permiten caracteres numericos.", "Campo Monto.", MessageBoxButton.OK, MessageBoxImage.Error);
-                return false;
-            }
-
             return true;
         }
 
-        private void SuplidorIdComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        /*private void SuplidorIdComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (SuplidorIdComboBox.SelectedItem == null)
+                return;
             var suplidor = ((Suplidores)SuplidorIdComboBox.SelectedItem);
- 
+
             NombresSuplidorTextBox.Text = suplidor.Nombres;
-        }
+        }*/
 
         private void ProductosComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var producto = ((Productos)ProductosComboBox.SelectedItem);
+            if (ProductosComboBox.SelectedItem == null)
+                return;
+            producto = ((Productos)ProductosComboBox.SelectedItem);
 
             CostoTextBox.Text = producto.Costo.ToString();
             DescripcionTextBox.Text = producto.Descripcion;
             InventarioTextBox.Text = producto.Inventario.ToString();
+        }
+
+        private void CantidadTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+            if (!Regex.IsMatch(CantidadTextBox.Text, "^[1-9]+$"))
+            {
+
+                TotalTexbox.Text = (0 * double.Parse(CostoTextBox.Text)).ToString();
+            }
+            else
+            {
+                TotalTexbox.Text = (int.Parse(CantidadTextBox.Text) * double.Parse(CostoTextBox.Text)).ToString();
+            }
+        }
+
+        public void LimpiarDetalle()
+        {
+            ProductosComboBox.SelectedItem = null;
+            CantidadTextBox.Clear();
+            CostoTextBox.Clear();
+            DescripcionTextBox.Clear();
+            TotalTexbox.Clear();
+            InventarioTextBox.Clear();
+            CantidadTextBox.Focus();
+        }
+
+        public void ModificarProducto()
+        {
+            ProductosBLL.Guardar(producto);
         }
     }
 }
